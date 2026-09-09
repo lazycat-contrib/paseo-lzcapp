@@ -11,7 +11,8 @@ application:
       do:
         - src: file:///lzcapp/pkg/content/lazycat-injects/paseo-connection.js
           params:
-            password: {{ .U.paseo_password | quote }}
+            password: |-
+              {{ .U.paseo_password | indent 14 | trimPrefix "              " }}
     - id: open-save-chooser
       on: browser
       when:
@@ -23,8 +24,10 @@ services:
     # upstream: ghcr.io/getpaseo/paseo:0.7.2
     image: ghcr.1ms.run/getpaseo/paseo:0.7.2
     environment:
-      - {{ printf "PASEO_PASSWORD=%s" .U.paseo_password | quote }}
-      - {{ printf "PASEO_HOSTNAMES=%s" (default .S.AppDomain (.U.paseo_hostnames | trim)) | quote }}
+      - |-
+        {{ printf "PASEO_PASSWORD=%s" .U.paseo_password | indent 8 | trimPrefix "        " }}
+      - |-
+        {{ printf "PASEO_HOSTNAMES=%s" (default .S.AppDomain (.U.paseo_hostnames | trim)) | indent 8 | trimPrefix "        " }}
     binds:
       - /lzcapp/var/paseo-home:/home/paseo
       - /lzcapp/var/workspace:/workspace
