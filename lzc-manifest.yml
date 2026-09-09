@@ -1,10 +1,13 @@
 application:
   subdomain: paseo
+  public_path:
+    - /
   upstreams:
     - location: /
       backend: http://paseo:6767/
   injects:
     - id: paseo-local-connection
+      auth_required: true
       on: browser
       when:
         - /*

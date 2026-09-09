@@ -1,5 +1,5 @@
 package: community.lazycat.app.paseo
-version: 0.7.2
+version: 0.7.3
 name: Paseo
 description: Orchestrate multiple coding agents from desktop and mobile
 homepage: https://github.com/getpaseo/paseo

@@ -23,7 +23,7 @@ Orchestrate multiple coding agents from desktop and mobile.
 ## 构建与发布
 
 ```sh
-lzc-cli project release -o dist/community.lazycat.app.paseo-v0.7.2.lpk
+lzc-cli project release -o dist/community.lazycat.app.paseo-v0.7.3.lpk
 ```
 
 GitHub Actions 每日检查稳定版镜像，也可手动运行 LazyCat LPK 工作流。构建产物使用 `<package-id>-v<version>.lpk` 命名，创建 GitHub Release 后以该资产 URL 和 SHA256 发布到喵喵商店。已上线版本跳过重复发布。
@@ -36,3 +36,9 @@ GitHub Actions 每日检查稳定版镜像，也可手动运行 LazyCat LPK 工�
 不需要官方商店凭据。组织 Secrets 是否授权本仓库由实际工作流验证，同名仓库 Secret 优先于组织 Secret。
 
 图标由用户提供，已转换为 512×512 PNG。文件选择器脚本来自懒猫开发者站点。
+
+## 懒猫修订 0.7.3
+
+上游镜像保持 0.7.2，新增根路径公共访问。未登录懒猫的访客需自行输入 Paseo 密码；密码自动填充仅对已登录用户启用。默认允许域名取部署变量 `{{ .S.AppDomain }}`，例如 `paseo.<设备名称>.heiyu.space`，不硬编码设备名或域名后缀。
+
+Tag 推送用于发布打包修订；定时任务仍跟踪上游镜像。上游版本低于当前包版本时，自动更新的防降级检查会拒绝该候选，待上游版本追平或超过后继续。

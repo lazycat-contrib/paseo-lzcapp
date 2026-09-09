@@ -1,5 +1,8 @@
 name: LazyCat LPK
 on:
+  push:
+    tags:
+      - "v*"
   schedule:
     - cron: "37 3 * * *"
   workflow_dispatch:
