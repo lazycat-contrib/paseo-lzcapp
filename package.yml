@@ -1,0 +1,17 @@
+package: community.lazycat.app.paseo
+version: 0.7.2
+name: Paseo
+description: Orchestrate multiple coding agents from desktop and mobile
+homepage: https://github.com/getpaseo/paseo
+author: getpaseo
+min_os_version: 1.5.0
+locales:
+  en:
+    name: Paseo
+    description: Orchestrate multiple coding agents from desktop and mobile
+  zh:
+    name: Paseo
+    description: 在桌面和移动设备上编排多个编程智能体
+permissions:
+  required:
+    - net.internet

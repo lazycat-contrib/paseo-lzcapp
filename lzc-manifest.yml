@@ -1,0 +1,40 @@
+application:
+  subdomain: paseo
+  upstreams:
+    - location: /
+      backend: http://paseo:6767/
+  injects:
+    - id: paseo-local-connection
+      on: browser
+      when:
+        - /*
+      do:
+        - src: file:///lzcapp/pkg/content/lazycat-injects/paseo-connection.js
+          params:
+            password: {{ .U.paseo_password | quote }}
+    - id: open-save-chooser
+      on: browser
+      when:
+        - /*
+      do:
+        - src: file:///lzcapp/pkg/content/lazycat-injects/lzc-file-chooser-inject.js
+services:
+  paseo:
+    # upstream: ghcr.io/getpaseo/paseo:0.7.2
+    image: ghcr.1ms.run/getpaseo/paseo:0.7.2
+    environment:
+      - {{ printf "PASEO_PASSWORD=%s" .U.paseo_password | quote }}
+      - {{ printf "PASEO_HOSTNAMES=%s" (default .S.AppDomain (.U.paseo_hostnames | trim)) | quote }}
+    binds:
+      - /lzcapp/var/paseo-home:/home/paseo
+      - /lzcapp/var/workspace:/workspace
+    setup_script: |
+      mkdir -p /workspace
+      if [ "$(stat -c %u /workspace)" = "0" ]; then
+        chown paseo:paseo /workspace
+      fi
+usage: |
+  打开应用后添加直连主机。连接窗口会为当前应用预填域名、HTTPS 端口和部署密码，请确认后连接。
+  PASEO_HOSTNAMES 留空使用懒猫应用域名；自定义时请将当前域名包含在允许列表中。
+  /workspace 为持久化代码目录，/home/paseo 保存守护进程状态及智能体凭据。卸载前请备份。
+  上游基础镜像不预装智能体 CLI；需按上游文档安装所需 CLI 并完成认证。
