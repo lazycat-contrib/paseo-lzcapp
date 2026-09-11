@@ -24,8 +24,8 @@ application:
         - src: file:///lzcapp/pkg/content/lazycat-injects/lzc-file-chooser-inject.js
 services:
   paseo:
-    # upstream: ghcr.io/getpaseo/paseo:0.7.2
-    image: ghcr.1ms.run/getpaseo/paseo:0.7.2
+    # upstream: ghcr.io/getpaseo/paseo:0.8.0
+    image: ghcr.1ms.run/getpaseo/paseo:0.8.0
     environment:
       - |-
         {{ printf "PASEO_PASSWORD=%s" .U.paseo_password | indent 8 | trimPrefix "        " }}
